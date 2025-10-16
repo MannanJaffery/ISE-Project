@@ -8,7 +8,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { auth } from '../../firebase';
-import Loader from "../../components/loading";
+
 
 const Changepassword = () => {
   const [currentPass, setCurrentPass] = useState("");
@@ -104,7 +104,7 @@ const Changepassword = () => {
               </a>
             </div>
           ) : (
-            <Loader />
+            <h1>Loading.....</h1>
           )}
         </div>
 
