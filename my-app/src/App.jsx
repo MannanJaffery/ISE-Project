@@ -5,6 +5,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/landingpage";
 import Changepassword from "./pages/authentication/changepassword";
 import ForgotPasswordPage from "./pages/authentication/forgetpassword";
+import ProtectedRoute from "./components/protectedRoute";
+
+import Dashboard from "./pages/dashboard";
+import PreviewandEdit from "./pages/previewandedit";
+import ProductPage from "./pages/productpage";
+
+
 
 function App() {
   return ( 
@@ -16,7 +23,22 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/change-password" element={<Changepassword />} />
           <Route path="/forget-password" element={<ForgotPasswordPage />} />
+          <Route path = "/dashboard/:id" element = {
+              <ProtectedRoute>
+              <Dashboard />
+              </ProtectedRoute>}/>
 
+              <Route path="/:username/:productname/preview+edit" element={
+                
+              <PreviewandEdit/>
+
+              }/>
+              
+
+              <Route path="/:username/:productname" element={
+              <ProductPage/>
+              
+              }/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

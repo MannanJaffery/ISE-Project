@@ -11,8 +11,9 @@ import { sendEmailVerification } from 'firebase/auth';
 import { getFunctions , httpsCallable } from 'firebase/functions';
 import { app } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-
-
+import Navbar from "../components/navbar";
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import useUsername from "../services/getcurrentUsername";
 
 //this is mock data for now , while creating mvp
 const faqs = [
@@ -87,9 +88,12 @@ const testimonials = [
 
 const LandingPage = () => {
 
-
+  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
   const navigate = useNavigate();
   const auth = useAuth();
+
+const {username}=useUsername();
+
 
 
   const [description,setDescription]= useState('');
@@ -106,7 +110,7 @@ const LandingPage = () => {
     console.error("Error creating checkout session:", error);
   }
 };
-
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" }); 
 
 const generateProductName =async () =>{
   try {
@@ -169,8 +173,13 @@ return () => clearInterval(interval);
 const { currentUser } = useAuth();
 const [buttonloading , setButtonLoading] = useState(false);
 
+
+
+
+
 const handleSubmit= async ()=>{
-      setButtonLoading(true);  
+      setButtonLoading(true); 
+
 const name=await generateProductName(description);
 
   const prompt_product = `You are required to extract structured data from the provided product information. Do not include any explanations, comments, or extra words. Your output must be strictly and only the following in **valid JSON format**:
@@ -291,6 +300,13 @@ return (
     </div>
   )
 }
+
+
+
+
+<div className="z-10 relative w-full bg-white ">
+  <Navbar />
+</div>
 
 
 
