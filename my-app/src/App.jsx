@@ -11,11 +11,23 @@ import Dashboard from "./pages/dashboard";
 import PreviewandEdit from "./pages/previewandedit";
 import ProductPage from "./pages/productpage";
 
+import { ProductsProvider } from "./context/productsContext";
+import Subscribers from "./pages/Subscribers";
+
+import Scoring_Tool from "./pages/tools/scoring_tools";
+import CompetitorFinder from "./pages/tools/competetor_finder";
+import MarketSizeEstimator from "./pages/tools/market_size_estimator";
+
+
+
+
 
 
 function App() {
   return ( 
     <AuthProvider>
+
+      <ProductsProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -33,14 +45,26 @@ function App() {
               <PreviewandEdit/>
 
               }/>
+
+               <Route path="/idea-validator" element={<Scoring_Tool/>}/>
+              <Route path="/competitor-finder" element={<CompetitorFinder/>}/>
+              <Route path="/market-size-estimate" element={<MarketSizeEstimator/>}/>
               
 
               <Route path="/:username/:productname" element={
               <ProductPage/>
               
               }/>
+
+
+                          <Route path = "/subscribers/:userid" element = {
+            <ProtectedRoute>
+              <Subscribers />
+            </ProtectedRoute>}/>
         </Routes>
       </BrowserRouter>
+
+      </ProductsProvider>
     </AuthProvider>
   );
 }
